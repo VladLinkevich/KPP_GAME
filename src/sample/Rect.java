@@ -1,11 +1,11 @@
 package sample;
 
-public class Rect {
+class Rect {
 
-    public double x;
-    public double y;
-    public double h;
-    public double w;
+    double x;
+    double y;
+    double h;
+    double w;
 
     Rect() {
         x = y = h = w = 0;

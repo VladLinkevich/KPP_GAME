@@ -6,9 +6,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public final int FPS = 60;
-    final int frameDelay = 1000000000 / FPS;
-    Game game = null;
+    private final int FPS = 60;
+    private final int frameDelay = 1000000000 / FPS;
+    private Game game = null;
 
 
     @Override
