@@ -72,10 +72,8 @@ public class Map {
 
     }
 
-    public void Draw() {
+    public void draw(GraphicsContext gc) {
         //texture.Draw();
-
-        GraphicsContext gc = Game.getGC();
 
         for (Rect r : fancec) {
             gc.setFill(Color.YELLOW);

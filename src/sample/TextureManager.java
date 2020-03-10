@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
@@ -10,7 +11,7 @@ import java.io.FileNotFoundException;
 public class TextureManager {
 
 
-    public static Image LoadTexture(String path) {
+    public static Image loadTexture(String path) {
         try {
 
             FileInputStream inputStream = new FileInputStream(path);
@@ -22,8 +23,7 @@ public class TextureManager {
         return null;
     }
 
-    public static void DrawTexture(Image img, Rect srcR, Rect destR) {
-        Game.getGC().drawImage(img, srcR.x, srcR.y, srcR.w, srcR.h, destR.x, destR.y, destR.w, destR.h);
-
+    public static void drawTexture(GraphicsContext gc,Image img, Rect srcR, Rect destR) {
+        gc.drawImage(img, srcR.x, srcR.y, srcR.w, srcR.h, destR.x, destR.y, destR.w, destR.h);
     }
 }

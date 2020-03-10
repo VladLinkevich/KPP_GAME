@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Texture {
@@ -16,7 +17,7 @@ public class Texture {
 
     public Texture(String path) {
 
-        this.img = TextureManager.LoadTexture(path);
+        this.img = TextureManager.loadTexture(path);
         srcR = new Rect();
         destR = new Rect();
 
@@ -40,13 +41,13 @@ public class Texture {
     public Texture(String path, double sx, double sy, double sh, double sw,
                    double dx, double dy, double dh, double dw) {
 
-        this.img = TextureManager.LoadTexture(path);
+        this.img = TextureManager.loadTexture(path);
         srcR = new Rect(sx, sy, sh, sw);
         destR = new Rect(dx, dy, dh, dw);
     }
 
-    public void Draw() {
-        TextureManager.DrawTexture(img, srcR, destR);
+    public void draw(GraphicsContext gc) {
+        TextureManager.drawTexture(gc, img, srcR, destR);
     }
 
 
