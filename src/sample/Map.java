@@ -75,18 +75,6 @@ public class Map {
     public void draw(GraphicsContext gc) {
         //texture.Draw();
 
-        for (Rect r : fancec) {
-            gc.setFill(Color.YELLOW);
-            gc.fillRect(r.x, r.y, sizeBlockX, sizeBlockY);
-
-            gc.setFill(Color.RED);
-            gc.fillRect(r.x, r.y, sizeBlockX - 1, sizeBlockY - 1);
-        }
-
-        for (Rect r : bonus) {
-            gc.setFill(Color.GREEN);
-            gc.fillOval(r.x, r.y, r.w, r.h);
-        }
 
     }
 
@@ -122,4 +110,7 @@ public class Map {
         return bonus;
     }
 
+    public double getSizeBlockX() {return sizeBlockX;}
+
+    public double getSizeBlockY() {return sizeBlockY;}
 }

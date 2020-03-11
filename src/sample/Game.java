@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class Game {
 
-    private int scale = 1;
+    private int scale = 4;
     private int width;
     private int height;
     private int score = 0;
@@ -26,7 +26,11 @@ public class Game {
     private PacmanFX pacmanFX;
 
     private Map map;
+    private MapFX mapFX;
     private Image image;
+
+    Opponent opponent;
+    PacmanFX opponentFX;
 
     public Game() {
 
@@ -48,13 +52,22 @@ public class Game {
         image = TextureManager.loadTexture("C:\\Mu_projects\\my_best_game\\sprite\\spritesheet.png");
 
         pacman = new Pacman();
-        pacman.init();
+        pacman.init(scale);
         pacmanFX = new PacmanFX();
-        pacmanFX.init(gc, image, new Rect(10, 10, 10, 10));
+        pacmanFX.init(gc, image, pacman.getSrcR(), pacman.getDestR().multiplication(scale));
+
+
+        opponent = new Opponent();
+        opponent.init(scale);
+        opponentFX = new PacmanFX();
+        opponentFX.init(gc, image, opponent.getSrcR(), opponent.getDestR());
 
 
         map = new Map();
         map.init(this.scale, this.width, this.height);
+        mapFX = new MapFX(map.getFancec(), map.getBonus(), map.getSizeBlockX(), map.getSizeBlockY());
+        mapFX.init(gc);
+
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("The best game");
@@ -68,18 +81,22 @@ public class Game {
 
     void draw() {
 
-        gc.clearRect(0, 0, width, height);                                // clear board
+        gc.clearRect(0, 0, width * scale, height * scale);                                // clear board
+
 
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width * scale, height * scale);
-        map.draw(gc);
+
+
+
+
+        pacmanFX.draw();
+        mapFX.draw();
+        opponentFX.draw();
 
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("", 30));
         gc.fillText("Score: " + score, 10, 30);
-
-        pacmanFX.draw();
-
     }
 
     public void update() {
@@ -103,7 +120,7 @@ public class Game {
             }
         }
 
-        pacmanFX.setCoordinate(pacman.getSrcR(), pacman.getDestR());
+
     }
 
     public int getScale() {

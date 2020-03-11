@@ -16,7 +16,8 @@ public class Pacman{
     private DIR direction = DIR.LEFT;
 
 
-    private final int size = 10;
+    private int scale;
+    private final int size = 7;
     private final int startX = 100;
     private final int startY = 100;
 
@@ -24,15 +25,15 @@ public class Pacman{
     private int speed = 6;
     private int i = 0;
 
-    private enum DIR {LEFT, RIGHT, UP, DOWN, STOP}
 
     Pacman() {
     }
 
-    public void init() {
+    public void init(final int scale) {
 
         this.destR = new Rect(startX, startY, size, size);
         srcR = new Rect(0,0,18,18);
+        this.scale = scale;
 
 
     }
@@ -40,10 +41,10 @@ public class Pacman{
     public void update(Scene scene) {
 
         switch (direction) {
-            case UP:    destR.y -= 1; break;
-            case DOWN:  destR.y += 1; break;
-            case LEFT:  destR.x -= 1; break;
-            case RIGHT: destR.x += 1; break;
+            case UP:    destR.y -= scale; break;
+            case DOWN:  destR.y += scale; break;
+            case LEFT:  destR.x -= scale; break;
+            case RIGHT: destR.x += scale; break;
         }
 
         animation();
@@ -99,10 +100,10 @@ public class Pacman{
     public void stopRun() {
         switch (direction) {
 
-            case UP:        destR.y += 1;   break;
-            case DOWN:      destR.y -= 1;   break;
-            case LEFT:      destR.x += 1;   break;
-            case RIGHT:     destR.x -= 1;   break;
+            case UP:        destR.y += scale;   break;
+            case DOWN:      destR.y -= scale;   break;
+            case LEFT:      destR.x += scale;   break;
+            case RIGHT:     destR.x -= scale;   break;
         }
 
         direction = DIR.STOP;
