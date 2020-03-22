@@ -39,4 +39,8 @@ class Rect {
         this.h = r.h;
     }
 
+    public Rect copy() {
+
+        return new Rect(this);
+    }
 }

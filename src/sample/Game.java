@@ -52,7 +52,7 @@ public class Game {
         image = TextureManager.loadTexture("C:\\Mu_projects\\my_best_game\\sprite\\spritesheet.png");
 
         pacman = new Pacman();
-        pacman.init(scale);
+        pacman.init();
         pacmanFX = new PacmanFX();
         pacmanFX.init(gc, image, pacman.getSrcR(), pacman.getDestR().multiplication(scale));
 
@@ -63,7 +63,7 @@ public class Game {
         opponentFX.init(gc, image, opponent.getSrcR(), opponent.getDestR());
 
 
-        map = new Map();
+        map =  new  Map();
         map.init(this.scale, this.width, this.height);
         mapFX = new MapFX(map.getFancec(), map.getBonus(), map.getSizeBlockX(), map.getSizeBlockY());
         mapFX.init(gc);
@@ -72,8 +72,6 @@ public class Game {
         primaryStage.setScene(scene);
         primaryStage.setTitle("The best game");
         primaryStage.show();
-
-
 
 
     }
@@ -87,12 +85,9 @@ public class Game {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width * scale, height * scale);
 
-
-
-
-        pacmanFX.draw();
         mapFX.draw();
-        opponentFX.draw();
+        // opponentFX.draw();
+        pacmanFX.draw();
 
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("", 30));
@@ -101,9 +96,10 @@ public class Game {
 
     public void update() {
 
-        Rect pacmanR = pacman.getDestR();
 
         pacman.update(scene);
+
+        Rect pacmanR = pacman.getDestR();
 
         for (Rect r : map.getFancec()) {
             if (Collision.AABB(pacmanR, r)) {

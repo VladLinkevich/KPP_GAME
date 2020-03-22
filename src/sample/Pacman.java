@@ -7,17 +7,18 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 
-public class Pacman{
+public class Pacman implements Person {
 
 
     private Rect srcR;
     private Rect destR;
 
-    private DIR direction = DIR.LEFT;
+    private DIR direction;
+    private DIR newDir;
 
 
     private int scale;
-    private final int size = 7;
+    private final int size = 10;
     private final int startX = 100;
     private final int startY = 100;
 
@@ -25,26 +26,35 @@ public class Pacman{
     private int speed = 6;
     private int i = 0;
 
+    private int speedChangePictures = 0;
+    private void
 
-    Pacman() {
-    }
+    Pacman() {}
 
-    public void init(final int scale) {
+    public void init() {
+
+        direction = DIR.STOP;
+        newDir = DIR.STOP;
 
         this.destR = new Rect(startX, startY, size, size);
-        srcR = new Rect(0,0,18,18);
-        this.scale = scale;
+        srcR = new Rect(2,2,15,15);
+
 
 
     }
+
+    @Override
+
 
     public void update(Scene scene) {
 
+
+
         switch (direction) {
-            case UP:    destR.y -= scale; break;
-            case DOWN:  destR.y += scale; break;
-            case LEFT:  destR.x -= scale; break;
-            case RIGHT: destR.x += scale; break;
+            case UP:    destR.y -= 1; break;
+            case DOWN:  destR.y += 1; break;
+            case LEFT:  destR.x -= 1; break;
+            case RIGHT: destR.x += 1; break;
         }
 
         animation();
@@ -60,10 +70,10 @@ public class Pacman{
             if (key.getCode() == KeyCode.RIGHT)     direction = DIR.RIGHT;                  // <- | ->
             if (key.getCode() == KeyCode.LEFT)      direction = DIR.LEFT;                   //
 
-            if (key.getCode() == KeyCode.W)         direction = DIR.UP;                     //
-            if (key.getCode() == KeyCode.S)         direction = DIR.DOWN;                   //   W
-            if (key.getCode() == KeyCode.D)         direction = DIR.RIGHT;                  // A S D
-            if (key.getCode() == KeyCode.A)         direction = DIR.LEFT;                   //
+            if (key.getCode() == KeyCode.W)         newDir = DIR.UP;                     //
+            if (key.getCode() == KeyCode.S)         newDir = DIR.DOWN;                   //   W
+            if (key.getCode() == KeyCode.D)         newDir = DIR.RIGHT;                  // A S D
+            if (key.getCode() == KeyCode.A)         newDir = DIR.LEFT;                   //
 
         });
     }
@@ -97,15 +107,18 @@ public class Pacman{
 
 
 
+
     public void stopRun() {
+
         switch (direction) {
 
-            case UP:        destR.y += scale;   break;
-            case DOWN:      destR.y -= scale;   break;
-            case LEFT:      destR.x += scale;   break;
-            case RIGHT:     destR.x -= scale;   break;
+            case UP:        destR.y += scale * 10;   break;
+            case DOWN:      destR.y -= scale * 10;   break;
+            case LEFT:      destR.x += scale * 10;   break;
+            case RIGHT:     destR.x -= scale * 10;   break;
         }
 
+        newDir = DIR.STOP;
         direction = DIR.STOP;
     }
 
@@ -113,8 +126,22 @@ public class Pacman{
         return this.destR;
     }
 
+    @Override
+    public DIR getDirection() {
+        return direction;
+    }
+
+    @Override
+    public DIR getNewDirection() {
+        return newDir;
+    }
+
     public Rect getSrcR() {
         return this.srcR;
     }
 
+    @Override
+    public void setDirection(DIR direction) {
+        this.direction = direction;
+    }
 }
