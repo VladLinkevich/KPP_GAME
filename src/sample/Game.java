@@ -23,14 +23,14 @@ public class Game {
     private Scene scene;
 
     private Pacman pacman;
-    private PacmanFX pacmanFX;
+    private ObjectDraw pacmanDraw;
 
     private Map map;
     private MapFX mapFX;
     private Image image;
 
     Opponent opponent;
-    PacmanFX opponentFX;
+    ObjectDraw opponentDraw;
 
     public Game() {
 
@@ -53,19 +53,19 @@ public class Game {
 
         pacman = new Pacman();
         pacman.init();
-        pacmanFX = new PacmanFX();
-        pacmanFX.init(gc, image, pacman.getSrcR(), pacman.getDestR().multiplication(scale));
+        pacmanDraw = new ObjectDraw();
+        pacmanDraw.init(gc, image, pacman.getSrcR(), pacman.getDestR().copy().multiplication(scale));
 
 
         opponent = new Opponent();
-        opponent.init(scale);
-        opponentFX = new PacmanFX();
-        opponentFX.init(gc, image, opponent.getSrcR(), opponent.getDestR());
+        opponent.init();
+        opponentDraw = new ObjectDraw();
+        opponentDraw.init(gc, image, opponent.getSrcR(), opponent.getDestR());
 
 
         map =  new  Map();
-        map.init(this.scale, this.width, this.height);
-        mapFX = new MapFX(map.getFancec(), map.getBonus(), map.getSizeBlockX(), map.getSizeBlockY());
+        map.init(this.width, this.height);
+        mapFX = new MapFX(map.getFancec(), map.getBonus(), map.getSizeBlockX(), map.getSizeBlockY(), scale);
         mapFX.init(gc);
 
 
@@ -86,8 +86,9 @@ public class Game {
         gc.fillRect(0, 0, width * scale, height * scale);
 
         mapFX.draw();
-        // opponentFX.draw();
-        pacmanFX.draw();
+
+        pacmanDraw.draw(pacman.getDestR().copy().multiplication(scale));
+        opponentDraw.draw(opponent.getDestR().copy().multiplication(scale));
 
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("", 30));
@@ -98,12 +99,21 @@ public class Game {
 
 
         pacman.update(scene);
-
         Rect pacmanR = pacman.getDestR();
+        opponent.update(map.getFancec(), pacmanR.copy());
+        Rect opponentR = opponent.getDestR();
+
 
         for (Rect r : map.getFancec()) {
             if (Collision.AABB(pacmanR, r)) {
                 pacman.stopRun();
+                break;
+            }
+        }
+
+        for (Rect r : map.getFancec()) {
+            if (Collision.AABB(opponentR, r)) {
+                opponent.stopRun();
                 break;
             }
         }
@@ -115,6 +125,8 @@ public class Game {
                 break;
             }
         }
+
+
 
 
     }

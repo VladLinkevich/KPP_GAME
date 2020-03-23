@@ -3,12 +3,12 @@ package sample;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class PacmanFX implements Draw {
+public class PacmanFX {
 
     private Texture texture;
     private GraphicsContext gc;
 
-    @Override
+
     public void init(GraphicsContext gc, Image image, Rect srcR, Rect destR) {
 
         this.gc = gc;
@@ -16,7 +16,9 @@ public class PacmanFX implements Draw {
 
     }
 
-    public void draw(){
+    public void draw(Rect destR){
+
+        this.texture.destR = destR;
         texture.draw(this.gc);
     }
 

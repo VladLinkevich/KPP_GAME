@@ -15,13 +15,16 @@ public class MapFX{
     private double sizeBlockX;
     private double sizeBlockY;
 
+    private int scale = 1;
 
-    MapFX(List<Rect> fancec, List<Rect> bonus, double sizeBlockX, double sizeBlockY){
+
+    MapFX(List<Rect> fancec, List<Rect> bonus, double sizeBlockX, double sizeBlockY, int scale){
 
         this.fancec = fancec;
         this.bonus = bonus;
         this.sizeBlockX = sizeBlockX;
         this.sizeBlockY = sizeBlockY;
+        this.scale = scale;
     }
 
 
@@ -33,15 +36,16 @@ public class MapFX{
 
         for (Rect r : fancec) {
             gc.setFill(Color.YELLOW);
-            gc.fillRect(r.x, r.y, sizeBlockX, sizeBlockY);
+            gc.fillRect(r.x * scale, r.y * scale, sizeBlockX * scale, sizeBlockY * scale);
 
             gc.setFill(Color.RED);
-            gc.fillRect(r.x, r.y, sizeBlockX - 1, sizeBlockY - 1);
+            gc.fillRect(r.x * scale, r.y * scale,
+                    (sizeBlockX - 1) * scale, (sizeBlockY - 1) * scale);
         }
 
         for (Rect r : bonus) {
             gc.setFill(Color.GREEN);
-            gc.fillOval(r.x, r.y, r.w, r.h);
+            gc.fillOval(r.x * scale, r.y * scale, r.w * scale, r.h * scale);
         }
 
     }
