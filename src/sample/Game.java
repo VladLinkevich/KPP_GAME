@@ -9,6 +9,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 
 public class Game {
 
@@ -29,8 +33,14 @@ public class Game {
     private MapFX mapFX;
     private Image image;
 
-    Opponent opponent;
-    ObjectDraw opponentDraw;
+    private Ghost redGhost = null;
+    private ObjectDraw redGhostDraw;
+    private Ghost pinkGhost = null;
+    private ObjectDraw pinkGhostDraw;
+
+    Vector<Ghost> ghosts;
+    Vector<ObjectDraw> objectDraws;
+
 
     public Game() {
 
@@ -42,6 +52,9 @@ public class Game {
 
         this.height = height;
         this.width = width;
+
+        ghosts = new Vector<Ghost>();
+        objectDraws = new Vector<ObjectDraw>();
 
         box = new VBox();
         c = new Canvas(width * scale, height * scale);
@@ -57,11 +70,25 @@ public class Game {
         pacmanDraw.init(gc, image, pacman.getSrcR(), pacman.getDestR().copy().multiplication(scale));
 
 
-        opponent = new Opponent();
-        opponent.init();
-        opponentDraw = new ObjectDraw();
-        opponentDraw.init(gc, image, opponent.getSrcR(), opponent.getDestR());
+        redGhost = new RedGhost();
+        redGhost.init();
 
+        redGhostDraw = new ObjectDraw();
+        redGhostDraw.init(gc, image, redGhost.getSrcR(), redGhost.getDestR());
+
+        pinkGhost = new PinkGhost();
+        pinkGhost.init();
+
+        pinkGhostDraw = new ObjectDraw();
+        pinkGhostDraw.init(gc, image, pinkGhost.getSrcR(), pinkGhost.getDestR());
+
+
+        ghosts.add(redGhost);
+        ghosts.add(pinkGhost);
+        //ghosts.add(redGhost);
+
+        objectDraws.add(redGhostDraw);
+        objectDraws.add(pinkGhostDraw);
 
         map =  new  Map();
         map.init(this.width, this.height);
@@ -88,7 +115,10 @@ public class Game {
         mapFX.draw();
 
         pacmanDraw.draw(pacman.getDestR().copy().multiplication(scale));
-        opponentDraw.draw(opponent.getDestR().copy().multiplication(scale));
+
+        for (int i = 0; i < ghosts.size(); ++i) {
+            objectDraws.get(i).draw(ghosts.get(i).getDestR().copy().multiplication(scale));
+        }
 
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("", 30));
@@ -100,8 +130,19 @@ public class Game {
 
         pacman.update(scene);
         Rect pacmanR = pacman.getDestR();
-        opponent.update(map.getFancec(), pacmanR.copy());
-        Rect opponentR = opponent.getDestR();
+
+        for (Ghost ghost : ghosts) {
+            ghost.update(map.getFancec(), pacmanR);
+            Rect redR = ghost.getDestR();
+            for (Rect r : map.getFancec()) {
+                if (Collision.AABB(redR, r)) {
+                    ghost.stopRun();
+                    break;
+                }
+            }
+        }
+
+
 
 
         for (Rect r : map.getFancec()) {
@@ -111,12 +152,7 @@ public class Game {
             }
         }
 
-        for (Rect r : map.getFancec()) {
-            if (Collision.AABB(opponentR, r)) {
-                opponent.stopRun();
-                break;
-            }
-        }
+
 
         for (Rect r : map.getBonus()) {
             if (Collision.AABB(pacmanR, r)) {
