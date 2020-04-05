@@ -1,6 +1,7 @@
 package sample;
 
 import java.util.List;
+import static sample.Animation.animationGhost;
 
 public class RedGhost implements Ghost {
 
@@ -15,7 +16,7 @@ public class RedGhost implements Ghost {
 
     private int pictures = 0;
     private int speedChangePictures = 5;
-
+    private float redColor = 82.5f;
 
     private DIR direction = DIR.RIGHT;
 
@@ -31,7 +32,10 @@ public class RedGhost implements Ghost {
     public void update(List<Rect> fancec, Rect destPacman){
 
         ++frame;
-
+        if ((frame % speedChangePictures) == 0) {
+            pictures++;
+        }
+        srcR.y = redColor;
 
         if ((direction == DIR.UP || direction == DIR.DOWN) && frame % 10 == 0 && !stop){
             if(!Collision.collisionWithFancec(fancec, destR.copy(), DIR.RIGHT) ||
@@ -51,8 +55,9 @@ public class RedGhost implements Ghost {
 
 
         if (stop && (frame % 10 == 0)){
-            direction = choiseNewDirection(fancec, destPacman);
-            stop = false;
+            if(!Animation.getFear()) direction = GhostBehavior.ghostDirectionInOvertake(fancec, this.destR, destPacman, direction);
+            else direction = GhostBehavior.ghostDirectionInFear(fancec, this.destR, destPacman, direction);
+           // stop = false;
         }
 
 
@@ -64,7 +69,7 @@ public class RedGhost implements Ghost {
             case RIGHT: this.destR.x += 1; break;
         }
 
-        animation();
+        animationGhost(getSrcR(), direction, pictures);
     }
 
     private DIR choiseNewDirection(List<Rect> fancec, Rect destPacman) {
@@ -136,28 +141,11 @@ public class RedGhost implements Ghost {
         stop = true;
     }
 
-    public void animation() {
-
-        if ((this.frame % this.speedChangePictures) == 0) {
-            pictures++;
-        }
-
-        switch (direction) {
-
-            case UP:        srcR.x = 2.5;    break;
-            case DOWN:      srcR.x = 42.5;    break;
-            case RIGHT:     srcR.x = 122.5;     break;
-            case LEFT:      srcR.x = 82.5;    break;
-        }
-
-        if (pictures % 3 == 1) srcR.x += 20;
-
-
-    }
 
 
 
     public Rect getSrcR() { return this.srcR; }
     public Rect getDestR() { return this.destR; }
+
 
 }

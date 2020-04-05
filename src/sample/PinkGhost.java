@@ -2,6 +2,8 @@ package sample;
 
 import java.util.List;
 
+import static sample.Animation.animationGhost;
+
 public class PinkGhost implements Ghost {
     private Rect srcR;
     private Rect destR;
@@ -9,11 +11,9 @@ public class PinkGhost implements Ghost {
     private boolean stop = false;
 
     private int frame = 0;
-    private int frameDelay = 5;
-
     private int pictures = 0;
-    private int speedChangePictures = 5;
-
+    private int frameDelay = 5;
+    private float pinkColor = 102.5f;
 
     private DIR direction = DIR.RIGHT;
 
@@ -29,9 +29,11 @@ public class PinkGhost implements Ghost {
     public void update(List<Rect> fancec, Rect destPacman){
 
         ++frame;
+        if ((frame % speedChangePictures) == 0) {
+            pictures++;
+        }
 
-
-
+        srcR.y = pinkColor;
 
         if (stop && (frame % frameDelay == 0)){
             direction = choiseNewDirection(fancec, destPacman);
@@ -46,7 +48,7 @@ public class PinkGhost implements Ghost {
             case RIGHT: this.destR.x += 2; break;
         }
 
-        animation();
+        animationGhost(getSrcR(), direction, pictures);
     }
 
     private DIR choiseNewDirection(List<Rect> fancec, Rect destPacman) {
@@ -72,6 +74,8 @@ public class PinkGhost implements Ghost {
 
     public void stopRun() {
 
+
+
         switch (direction) {
 
             case UP:        destR.y += 2;   break;
@@ -83,25 +87,7 @@ public class PinkGhost implements Ghost {
         stop = true;
     }
 
-    public void animation() {
 
-        if ((this.frame % this.speedChangePictures) == 0) {
-            pictures++;
-        }
-
-        switch (direction) {
-
-            case UP:        srcR.x = 2.5;    break;
-            case DOWN:      srcR.x = 42.5;    break;
-            case RIGHT:     srcR.x = 122.5;     break;
-            case LEFT:      srcR.x = 82.5;    break;
-            case STOP:      return;
-        }
-
-        if (pictures % 3 == 1) srcR.x += 20;
-
-
-    }
 
 
 

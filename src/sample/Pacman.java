@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import static sample.Animation.animationPacman;
 
 
 public class Pacman /*implements Person*/ {
@@ -42,6 +43,10 @@ public class Pacman /*implements Person*/ {
 
         this.frame++;
 
+        if ((frame % speedChangePictures) == 0) {
+            pictures++;
+        }
+
 
         switch (direction) {
             case UP:    destR.y -= 1; break;
@@ -50,8 +55,7 @@ public class Pacman /*implements Person*/ {
             case RIGHT: destR.x += 1; break;
         }
 
-
-        animation();
+        animationPacman(srcR, direction, pictures);
 
         keyBoardController(scene);
 
@@ -77,30 +81,6 @@ public class Pacman /*implements Person*/ {
         });
     }
 
-    public void animation() {
-
-        if ((this.frame % this.speedChangePictures) == 0) {
-            pictures++;
-        }
-
-        switch (direction) {
-
-            case UP:        srcR.y = 42.5;    break;
-            case DOWN:      srcR.y = 62.5;    break;
-            case LEFT:      srcR.y = 2.5;     break;
-            case RIGHT:     srcR.y = 22.5;    break;
-        }
-
-        if (pictures % 3 == 0) srcR.x = 2.5;
-
-        if (pictures % 3 == 1) srcR.x = 22.5;
-
-        if (pictures  % 3 == 2) {
-
-            srcR.x = 42.5;
-            srcR.y = 2.5;
-        }
-    }
 
 
 

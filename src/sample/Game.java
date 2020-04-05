@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import static sample.Animation.getFear;
+import static sample.Animation.setEndFear;
+import static sample.Animation.setFear;
+
 
 public class Game {
 
@@ -40,6 +44,9 @@ public class Game {
 
     Vector<Ghost> ghosts;
     Vector<ObjectDraw> objectDraws;
+
+    public int timeFear = 0;
+
 
 
     public Game() {
@@ -142,17 +149,12 @@ public class Game {
             }
         }
 
-
-
-
         for (Rect r : map.getFancec()) {
             if (Collision.AABB(pacmanR, r)) {
                 pacman.stopRun();
                 break;
             }
         }
-
-
 
         for (Rect r : map.getBonus()) {
             if (Collision.AABB(pacmanR, r)) {
@@ -162,8 +164,21 @@ public class Game {
             }
         }
 
+        if(score == 10 || score == 250){
+            setFear(true);
+            timeFear = 0;
+        }
 
+        timeFear++;
 
+        if (timeFear == 300 && getFear()){
+            Animation.setEndFear(true);
+        }
+
+        if (timeFear == 400 && getFear()){
+            setEndFear(false);
+            setFear(false);
+        }
 
     }
 
