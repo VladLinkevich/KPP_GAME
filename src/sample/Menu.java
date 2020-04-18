@@ -44,7 +44,7 @@ public class Menu {
 
         root = new Pane();
         box = new VBox();
-        image = TextureManager.loadTexture("C:\\Mu_projects\\my_best_game\\sprite\\orig.gif");
+        image = TextureManager.loadTexture("sprite\\orig.gif");
         ImageView img = new ImageView(image);
         img.setFitHeight(525);
         img.setFitWidth(790);

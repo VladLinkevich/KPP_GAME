@@ -71,7 +71,7 @@ public class Game {
         gc = c.getGraphicsContext2D();
         scene = new Scene(box, width * scale, height * scale);
 
-        image = TextureManager.loadTexture("C:\\Mu_projects\\my_best_game\\sprite\\spritesheet.png");
+        image = TextureManager.loadTexture("sprite\\spritesheet.png");
 
         pacman = new Pacman();
         pacman.init();
