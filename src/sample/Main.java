@@ -9,6 +9,8 @@ public class Main extends Application {
     private final int FPS = 60;
     private final int frameDelay = 1000000000 / FPS;
     private Game game = null;
+    private Menu menu;
+    private AnimationTimer at;
 
 
     @Override
@@ -18,8 +20,13 @@ public class Main extends Application {
         game = new Game();
         game.init(primaryStage, 200, 200);
 
+        menu = new Menu();
+        menu.init(primaryStage, this);
 
-        new AnimationTimer() {
+        //game.init(primaryStage, 200, 200);
+
+
+        at = new AnimationTimer(){
             long lastTick = 0;
 
             public void handle(long now) {
@@ -35,15 +42,28 @@ public class Main extends Application {
                 }
             }
 
-        }.start();
+        };
 
 
+
+    }
+
+    public void startGame(){
+
+        at.start();
+        game.startScrene();
+    }
+
+    public void stopGame(){
+        at.stop();
+        menu.startScrene();
     }
 
 
     public void update() {
         game.draw();
         game.update();
+
     }
 
     public static void main(String[] args) {

@@ -29,6 +29,7 @@ public class Game {
     private Canvas c;
     private GraphicsContext gc;
     private Scene scene;
+    private Stage primaryStage;
 
     private Pacman pacman;
     private ObjectDraw pacmanDraw;
@@ -57,6 +58,7 @@ public class Game {
 
     public void init(Stage primaryStage, final int height, final int width) {
 
+        this.primaryStage = primaryStage;
         this.height = height;
         this.width = width;
 
@@ -110,6 +112,12 @@ public class Game {
 
     }
 
+    public void startScrene(){
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("The best game");
+        primaryStage.show();
+    }
 
     void draw() {
 
