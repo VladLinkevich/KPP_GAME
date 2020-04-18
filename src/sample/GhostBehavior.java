@@ -4,23 +4,51 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 public class GhostBehavior {
+
+    private static DIR choiceDir(boolean[] newDir){
+
+        if (newDir[0]) return DIR.UP;
+        else  if (newDir[1]) return DIR.DOWN;
+        else  if (newDir[2]) return DIR.LEFT;
+        else return DIR.RIGHT;
+    }
 
  public static DIR ghostDirectionInOvertake(List<Rect> fancec, Rect destGhost, Rect destPacman, DIR direction){
 
      double distanceX = destPacman.x - destGhost.x;
      double distanceY = destPacman.y - destGhost.y;
 
-     boolean dir[] = new boolean[4];
+     int clearDir = 0;
 
+     boolean newDir[] = {true, true, true, true}; /* UP = 0
+                                                * DOWN = 1
+                                                * LEFT = 2
+                                                * RIGHT = 3
+                                                */
+
+
+     if (Collision.collisionWithFancec(fancec, destGhost.copy(), DIR.UP))       { newDir[0] = false; }
+     if (Collision.collisionWithFancec(fancec, destGhost.copy(), DIR.DOWN))     { newDir[1] = false; }
+     if (Collision.collisionWithFancec(fancec, destGhost.copy(), DIR.LEFT))     { newDir[2] = false; }
+     if (Collision.collisionWithFancec(fancec, destGhost.copy(), DIR.RIGHT))    { newDir[3] = false; }
+
+     for(boolean d : newDir){
+         if (d) { clearDir++; }
+     }
+     if (clearDir == 1)
+         return choiceDir(newDir);
 
 
      switch (direction){
 
-         case LEFT: break;
-         case RIGHT: break;
-         case UP: break;
-         case DOWN: break;
+         case LEFT:     newDir[3] = false;  break;
+         case RIGHT:    newDir[2] = false;  break;
+         case UP:       newDir[1] = false;  break;
+         case DOWN:     newDir[0] = false;  break;
+
      }
 
      if (distanceX >= 0 && distanceY > 0) {
