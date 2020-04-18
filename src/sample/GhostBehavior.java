@@ -1,6 +1,8 @@
 package sample;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GhostBehavior {
 
@@ -8,6 +10,18 @@ public class GhostBehavior {
 
      double distanceX = destPacman.x - destGhost.x;
      double distanceY = destPacman.y - destGhost.y;
+
+     boolean dir[] = new boolean[4];
+
+
+
+     switch (direction){
+
+         case LEFT: break;
+         case RIGHT: break;
+         case UP: break;
+         case DOWN: break;
+     }
 
      if (distanceX >= 0 && distanceY > 0) {
          if (distanceX > distanceY) {

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Version 3.0" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Version 3.0">
+      <change afterPath="$PROJECT_DIR$/src/sample/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/GhostBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/GhostBehavior.java" afterDir="false" />
+    </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -109,22 +112,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="3" />
+          <entry key="java" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="3" />
+          <entry key="JAVA" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="19" />
+          <entry key="java" value="343" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="19" />
+          <entry key="JAVA" value="343" />
         </counts>
       </usages-collector>
     </session>
@@ -134,18 +137,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/MapFX.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="38" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/PinkGhost.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -173,8 +164,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+            <state relative-caret-position="1079">
+              <caret line="56" column="21" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -182,11 +173,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="277">
+              <caret line="73" column="51" lean-forward="true" selection-start-line="73" selection-start-column="51" selection-end-line="73" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -197,8 +188,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Menu.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+            <state relative-caret-position="995">
+              <caret line="49" column="29" lean-forward="true" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -207,28 +198,40 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/Rect.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="693">
-              <caret line="35" column="18" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/GhostBehavior.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2730">
-              <caret line="130" selection-start-line="130" selection-end-line="130" />
+            <state relative-caret-position="252">
+              <caret line="21" column="24" lean-forward="true" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/sample/Test.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42">
+              <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/Ghost.java">
+        <entry file="file://$PROJECT_DIR$/src/sample/DIR.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="84">
+              <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sample/Collision.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="441">
+              <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -299,7 +302,6 @@
         <option value="$PROJECT_DIR$/src/sample/Component.java" />
         <option value="$PROJECT_DIR$/src/sample/KeyboardController.java" />
         <option value="$PROJECT_DIR$/src/sample/Texture.java" />
-        <option value="$PROJECT_DIR$/src/sample/DIR.java" />
         <option value="$PROJECT_DIR$/src/sample/TextureManager.java" />
         <option value="$PROJECT_DIR$/src/sample/Rect.java" />
         <option value="$PROJECT_DIR$/src/sample/Draw.java" />
@@ -316,15 +318,16 @@
         <option value="$PROJECT_DIR$/src/sample/Animation.java" />
         <option value="$PROJECT_DIR$/src/sample/PinkGhost.java" />
         <option value="$PROJECT_DIR$/src/sample/RedGhost.java" />
-        <option value="$PROJECT_DIR$/src/sample/GhostBehavior.java" />
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
-        <option value="$PROJECT_DIR$/src/sample/Menu.java" />
         <option value="$PROJECT_DIR$/src/sample/Game.java" />
+        <option value="$PROJECT_DIR$/src/sample/Menu.java" />
+        <option value="$PROJECT_DIR$/src/sample/DIR.java" />
+        <option value="$PROJECT_DIR$/src/sample/GhostBehavior.java" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="13" />
     <option name="y" value="372" />
     <option name="width" value="1938" />
@@ -346,6 +349,11 @@
             <path>
               <item name="KPP_Game" type="b2602c69:ProjectViewProjectNode" />
               <item name="KPP_Game" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="KPP_Game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KPP_Game" type="462c0819:PsiDirectoryNode" />
+              <item name="sprite" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="KPP_Game" type="b2602c69:ProjectViewProjectNode" />
@@ -374,13 +382,18 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1587212093308" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1587214185605" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="recentsLimit" value="5" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Mu_projects\game\KPP_Game\sprite" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -500,7 +513,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1335837" />
@@ -512,7 +525,7 @@
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32988507" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.15795454" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30454546" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.11477273" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -679,13 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/DIR.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -739,13 +745,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Collision.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Animation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -770,13 +769,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/GhostBehavior.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2730">
-          <caret line="130" selection-start-line="130" selection-end-line="130" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Ghost.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -794,16 +786,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/PinkGhost.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="47" column="25" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/RedGhost.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
@@ -814,20 +796,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Menu.java">
+    <entry file="file://$PROJECT_DIR$/src/sample/PinkGhost.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="294">
+          <caret line="47" column="25" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -836,11 +808,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="277">
+          <caret line="73" column="51" lean-forward="true" selection-start-line="73" selection-start-column="51" selection-end-line="73" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="995">
+          <caret line="49" column="29" lean-forward="true" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Collision.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/DIR.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1079">
+          <caret line="56" column="21" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/GhostBehavior.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="21" column="24" lean-forward="true" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
         </state>
       </provider>
     </entry>
