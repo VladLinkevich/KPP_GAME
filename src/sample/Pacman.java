@@ -96,7 +96,11 @@ public class Pacman /*implements Person*/ {
         }
         direction = DIR.STOP;
     }
+    public void restart() {
 
+        direction = DIR.STOP;
+        this.destR = new Rect(startX, startY, size, size);
+    }
 
     public Rect getDestR() {
         return this.destR;

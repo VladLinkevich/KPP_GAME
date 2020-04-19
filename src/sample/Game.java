@@ -24,6 +24,8 @@ public class Game {
     private int width;
     private int height;
     private int score = 0;
+    private Main main;
+    private int frame = 0;
 
     private VBox box;
     private Canvas c;
@@ -37,6 +39,7 @@ public class Game {
     private Map map;
     private MapFX mapFX;
     private Image image;
+
 
     private Ghost redGhost = null;
     private ObjectDraw redGhostDraw;
@@ -56,11 +59,13 @@ public class Game {
     }
 
 
-    public void init(Stage primaryStage, final int height, final int width) {
+    public void init(Main main, Stage primaryStage, final int height, final int width) {
 
+        this.main = main;
         this.primaryStage = primaryStage;
         this.height = height;
         this.width = width;
+
 
         ghosts = new Vector<Ghost>();
         objectDraws = new Vector<ObjectDraw>();
@@ -85,15 +90,8 @@ public class Game {
         redGhostDraw = new ObjectDraw();
         redGhostDraw.init(gc, image, redGhost.getSrcR(), redGhost.getDestR());
 
-        pinkGhost = new PinkGhost();
-        pinkGhost.init();
-
-        pinkGhostDraw = new ObjectDraw();
-        pinkGhostDraw.init(gc, image, pinkGhost.getSrcR(), pinkGhost.getDestR());
-
-
         ghosts.add(redGhost);
-        ghosts.add(pinkGhost);
+        //ghosts.add(pinkGhost);
         //ghosts.add(redGhost);
 
         objectDraws.add(redGhostDraw);
@@ -143,12 +141,18 @@ public class Game {
     public void update() {
 
 
+
         pacman.update(scene);
         Rect pacmanR = pacman.getDestR();
 
         for (Ghost ghost : ghosts) {
             ghost.update(map.getFancec(), pacmanR);
             Rect redR = ghost.getDestR();
+            if ((pacmanR.x <= redR.x + 1 && pacmanR.x >= redR.x - 1) &&
+                    (pacmanR.y <= redR.y + 1 && pacmanR.y >= redR.y - 1)){
+                if (getFear()){ redR.x = 100; redR.y = 80; }
+                else { main.stopGame(); }
+            }
             for (Rect r : map.getFancec()) {
                 if (Collision.AABB(redR, r)) {
                     ghost.stopRun();
@@ -156,7 +160,7 @@ public class Game {
                 }
             }
         }
-
+        frame++;
         for (Rect r : map.getFancec()) {
             if (Collision.AABB(pacmanR, r)) {
                 pacman.stopRun();
@@ -187,6 +191,16 @@ public class Game {
             setEndFear(false);
             setFear(false);
         }
+
+    }
+
+    public void restart(){
+
+        for (Ghost ghost : ghosts){
+            ghost.restart();
+        }
+        map.restart();
+        pacman.restart();
 
     }
 

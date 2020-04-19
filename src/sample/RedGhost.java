@@ -141,7 +141,11 @@ public class RedGhost implements Ghost {
         stop = true;
     }
 
-
+    @Override
+    public void restart() {
+        direction = DIR.STOP;
+        this.destR = new Rect(10, 10, 10, 10);
+    }
 
 
     public Rect getSrcR() { return this.srcR; }

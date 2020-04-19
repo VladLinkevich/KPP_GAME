@@ -92,6 +92,22 @@ public class Map {
 
     }
 
+    public void restart(){
+
+        bonus.clear();
+
+        for (int i = 0, end = map.length; i < end; i++) {
+            for (int j = 0, endL = map[i].length; j < endL; ++j) {
+                if (map[i][j] == 0) {
+                    bonus.add(new Rect((j * sizeBlockX) + (sizeBlockX / 3),
+                            (i * sizeBlockY) + (sizeBlockY / 3),
+                            sizeBlockX / 3,
+                            sizeBlockY / 3));
+                }
+            }
+        }
+    }
+
     public List<Rect> getFancec() {
         return fancec;
     }

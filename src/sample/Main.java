@@ -18,7 +18,7 @@ public class Main extends Application {
 
 
         game = new Game();
-        game.init(primaryStage, 200, 200);
+        game.init(this, primaryStage, 200, 200);
 
         menu = new Menu();
         menu.init(primaryStage, this);
@@ -50,19 +50,24 @@ public class Main extends Application {
 
     public void startGame(){
 
+
+        game.restart();
+
         at.start();
         game.startScrene();
     }
 
     public void stopGame(){
+
         at.stop();
         menu.startScrene();
     }
 
 
-    public void update() {
-        game.draw();
-        game.update();
+    private void update() {
+
+            game.draw();
+            game.update();
 
     }
 

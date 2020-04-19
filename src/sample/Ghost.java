@@ -10,7 +10,7 @@ public interface Ghost {
     void init();
     void update(List<Rect> fancec, Rect destPacman);
     void stopRun();
-
+    void restart();
 
     Rect getSrcR();
     Rect getDestR();
