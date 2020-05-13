@@ -22,10 +22,13 @@ import javafx.util.Duration;
 import sample.TextureManager;
 
 
+import java.awt.*;
+
 import static java.awt.SystemColor.menu;
 
 public class Menu {
 
+    private Main main;
     private VBox box;
     private Canvas c;
     private GraphicsContext gc;
@@ -42,9 +45,10 @@ public class Menu {
     public void init(Stage primaryStage, Main main){
 
         this.primaryStage = primaryStage;
+        this.main = main;
 
         sw = new SettingWindow();
-        sw.init(primaryStage, main);
+        sw.init(primaryStage, this);
         root = new Pane();
         box = new VBox();
         image = TextureManager.loadTexture("sprite\\orig.gif");
@@ -114,7 +118,9 @@ public class Menu {
 
     }
 
-
+    public void setLvl(Lvl lvl){
+        main.setLvl(lvl);
+    }
 
 }
 

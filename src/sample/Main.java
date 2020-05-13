@@ -75,7 +75,7 @@ public class Main extends Application {
 
 
         game.restart();
-
+        game.setLevel(1);
         at.start();
         game.startScrene();
     }
@@ -92,6 +92,10 @@ public class Main extends Application {
             game.draw();
             game.update();
 
+    }
+
+    public void setLvl(Lvl lvl){
+        game.setLvl(lvl);
     }
 
     public static void main(String[] args) {

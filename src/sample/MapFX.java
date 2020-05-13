@@ -51,7 +51,7 @@ public class MapFX{
         gc.fillOval(92 * scale, 172 * scale,scale * 16, scale * 16);
         gc.setFill(Color.BLACK);
 
-        if (full <= 16) {
+        if (full < 16) {
             gc.fillRect(92 * scale, (172 + full) * scale, scale * 16, scale * (16 - full));
         }else {
             TextureManager.drawTexture(gc, texture.img, texture.srcR, texture.destR);

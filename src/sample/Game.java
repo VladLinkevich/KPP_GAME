@@ -22,6 +22,9 @@ import static sample.Animation.setFear;
 
 public class Game {
 
+    private Lvl lvl;
+    private int level = 1;
+    private int levelSize = 40;
     private int scale = 4;
     private int width;
     private int height;
@@ -42,7 +45,7 @@ public class Game {
     private Map map;
     private MapFX mapFX;
     private Image image;
-
+    private MealFX[] meals;
 
     private Ghost redGhost = null;
     private ObjectDraw redGhostDraw;
@@ -55,10 +58,7 @@ public class Game {
     public int timeFear = 0;
 
 
-    public Game() {
-
-
-    }
+    public Game() {}
 
 
     public void init(Main main, Stage primaryStage, final int height, final int width) {
@@ -68,7 +68,8 @@ public class Game {
         this.height = height;
         this.width = width;
 
-
+        levelSize *= scale;
+        this.lvl = Lvl.EASY;
         ghosts = new Vector<Ghost>();
         objectDraws = new Vector<ObjectDraw>();
 
@@ -95,6 +96,20 @@ public class Game {
         ghosts.add(redGhost);
         //ghosts.add(pinkGhost);
         //ghosts.add(redGhost);
+
+        meals = new MealFX[4];
+        meals[0] = new MealFX();
+        meals[0].init(gc, image, new Rect(170.0, 162.5, 15, 15),
+                new Rect(10, 10, 10, 10), scale);
+        meals[1] = new MealFX();
+        meals[1].init(gc, image, new Rect(170.0, 182.5, 15, 15),
+                new Rect(180, 180, 10, 10), scale);
+        meals[2] = new MealFX();
+        meals[2].init(gc, image, new Rect(170.0, 202.5, 15, 15),
+                new Rect(180, 10, 10, 10), scale);
+        meals[3] = new MealFX();
+        meals[3].init(gc, image, new Rect(170.0, 222.5, 15, 15),
+                new Rect(10, 180, 10, 10), scale);
 
         objectDraws.add(redGhostDraw);
         objectDraws.add(pinkGhostDraw);
@@ -128,7 +143,7 @@ public class Game {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width * scale, height * scale);
 
-        mapFX.draw(score * 0.32);
+        mapFX.draw(score * (0.32 / level));
 
         pacmanDraw.draw(pacman.getDestR().copy().multiplication(scale));
 
@@ -136,9 +151,18 @@ public class Game {
             objectDraws.get(i).draw(ghosts.get(i).getDestR().copy().multiplication(scale));
         }
 
+        for (MealFX m : meals){
+            m.draw();
+        }
+
+
         gc.setFill(Color.WHITE);
+        gc.setFont(new Font("", levelSize));
+        gc.fillText("Level " + level, (100 * scale) - levelSize * 1.35, (100 * scale) - levelSize);
+
+        gc.setFill(Color.BLACK);
         gc.setFont(new Font("", 30));
-        gc.fillText("Score: " + score, 10, 30);
+        gc.fillText("Score: " + (int)score, 10, 30);
     }
 
     public void update() {
@@ -146,7 +170,8 @@ public class Game {
         if(KeyboardController.pauseController(scene)){
             saveGame();
         }
-
+        if (levelSize > 0)
+        levelSize -= 5;
 
 
         pacman.setNewDirection(KeyboardController.pacmanController(scene));
@@ -170,6 +195,17 @@ public class Game {
             }
         }
         frame++;
+
+        if (frame % 10 == 0){
+            for (MealFX m : meals){
+                if (Collision.AABB(pacmanR, m.getDectR())){
+                    m.delete();
+                    setFear(true);
+                    timeFear = 0;
+                }
+            }
+        }
+
         for (Rect r : map.getFancec()) {
             if (Collision.AABB(pacmanR, r)) {
                 pacman.stopRun();
@@ -185,19 +221,27 @@ public class Game {
             }
         }
 
-        if (score >= 50) {
+        if ((score >= 50 && level == 1) ||
+                (score >= 100 && level == 2) ||
+                (score >= 150 && level == 3) ||
+                (score >= 200 && level == 4)) {
             Rect g = new Rect(90 , 170 ,  20,  20);
             if (Collision.AABB(pacmanR, g)) {
-                main.stopGame();
+                level++;
+                if (level == 5) {
+                  main.stopGame();
+                }
+
+                restart();
             }
         }
         timeFear++;
 
-        if (timeFear == 300 && getFear()){
+        if (timeFear == 125 && getFear()){
             Animation.setEndFear(true);
         }
 
-        if (timeFear == 400 && getFear()){
+        if (timeFear == 200 && getFear()){
             setEndFear(false);
             setFear(false);
         }
@@ -243,9 +287,22 @@ public class Game {
         for (Ghost ghost : ghosts){
             ghost.restart();
         }
+        for (MealFX m : meals){
+            m.restore();
+        }
+        pacman.setNewDirection(DIR.STOP);
         map.restart();
         pacman.restart();
         score = 0;
+        levelSize = 40 * scale;
+    }
+
+    public void setLvl(Lvl lvl){
+        this.lvl = lvl;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public int getScale() {
