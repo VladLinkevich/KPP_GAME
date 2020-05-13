@@ -38,7 +38,7 @@ public class Game {
     private GraphicsContext gc;
     private Scene scene;
     private Stage primaryStage;
-
+    private WinWindows ww;
     private Pacman pacman;
     private ObjectDraw pacmanDraw;
 
@@ -113,6 +113,9 @@ public class Game {
 
         objectDraws.add(redGhostDraw);
         objectDraws.add(pinkGhostDraw);
+
+        ww = new WinWindows();
+        ww.init(primaryStage, this);
 
         map =  new  Map();
         map.init(this.width, this.height);
@@ -229,10 +232,10 @@ public class Game {
             if (Collision.AABB(pacmanR, g)) {
                 level++;
                 if (level == 5) {
-                  main.stopGame();
+                  ww.startScrene();
                 }
+                ww.startScrene();
 
-                restart();
             }
         }
         timeFear++;
@@ -303,6 +306,10 @@ public class Game {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public void newGame(){
+        main.stopGame();
     }
 
     public int getScale() {
