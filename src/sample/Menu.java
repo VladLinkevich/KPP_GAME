@@ -55,11 +55,12 @@ public class Menu {
 
         StackPane newGame = addButton("New Game");
         StackPane continueGame =  addButton("Continue");
+        StackPane setting =  addButton("Settings");
 
         box.setTranslateX(195);
         box.setTranslateY(50);
 
-        box.getChildren().addAll(newGame, continueGame);
+        box.getChildren().addAll(newGame, continueGame, setting);
 
 
         newGame.setOnMouseClicked(event -> { main.startGame(); });

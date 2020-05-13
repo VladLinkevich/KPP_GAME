@@ -1,10 +1,7 @@
 package sample;
 
 
-import javafx.scene.Scene;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import static sample.Animation.animationPacman;
 
 
@@ -39,7 +36,7 @@ public class Pacman /*implements Person*/ {
 
 
 
-    public void update(Scene scene) {
+    public void update() {
 
         this.frame++;
 
@@ -57,31 +54,12 @@ public class Pacman /*implements Person*/ {
 
         animationPacman(srcR, direction, pictures);
 
-        keyBoardController(scene);
+
 
         if (frame % 10 == 0){
             direction = newDirection;
         }
     }
-
-    private void keyBoardController(Scene scene) {
-
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
-
-                if (key.getCode() == KeyCode.UP) newDirection = DIR.UP;                     //
-                if (key.getCode() == KeyCode.DOWN) newDirection = DIR.DOWN;                 //    ^
-                if (key.getCode() == KeyCode.RIGHT) newDirection = DIR.RIGHT;               // <- | ->
-                if (key.getCode() == KeyCode.LEFT) newDirection = DIR.LEFT;                 //
-
-                if (key.getCode() == KeyCode.W) newDirection = DIR.UP;                     //
-                if (key.getCode() == KeyCode.S) newDirection = DIR.DOWN;                   //   W
-                if (key.getCode() == KeyCode.D) newDirection = DIR.RIGHT;                  // A S D
-                if (key.getCode() == KeyCode.A) newDirection = DIR.LEFT;                   //
-
-        });
-    }
-
-
 
 
 
@@ -100,6 +78,10 @@ public class Pacman /*implements Person*/ {
 
         direction = DIR.STOP;
         this.destR = new Rect(startX, startY, size, size);
+    }
+
+    public void setNewDirection(DIR newDirection) {
+        this.newDirection = newDirection;
     }
 
     public Rect getDestR() {

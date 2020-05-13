@@ -3,7 +3,7 @@ package sample;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.SortedMap;
 
 
 public class GhostBehavior {
@@ -116,7 +116,7 @@ public class GhostBehavior {
         double distanceY = destPacman.y - destGhost.y;
 
         int clearDir = 0;
-
+        Map<DIR, Boolean> dirBooleanMap = new HashMap<>();
         boolean newDir[] = {true, true, true, true}; /* UP = 0
          * DOWN = 1
          * LEFT = 2

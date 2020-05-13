@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.*;
+import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -23,9 +25,10 @@ public class Game {
     private int scale = 4;
     private int width;
     private int height;
-    private int score = 0;
+    private double score = 0;
     private Main main;
     private int frame = 0;
+    private boolean save = false;
 
     private VBox box;
     private Canvas c;
@@ -50,7 +53,6 @@ public class Game {
     Vector<ObjectDraw> objectDraws;
 
     public int timeFear = 0;
-
 
 
     public Game() {
@@ -103,6 +105,7 @@ public class Game {
         mapFX.init(gc);
 
 
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("The best game");
         primaryStage.show();
@@ -125,7 +128,7 @@ public class Game {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width * scale, height * scale);
 
-        mapFX.draw();
+        mapFX.draw(score * 0.32);
 
         pacmanDraw.draw(pacman.getDestR().copy().multiplication(scale));
 
@@ -140,9 +143,15 @@ public class Game {
 
     public void update() {
 
+        if(KeyboardController.pauseController(scene)){
+            saveGame();
+        }
 
 
-        pacman.update(scene);
+
+        pacman.setNewDirection(KeyboardController.pacmanController(scene));
+        pacman.update();
+
         Rect pacmanR = pacman.getDestR();
 
         for (Ghost ghost : ghosts) {
@@ -176,11 +185,12 @@ public class Game {
             }
         }
 
-        if(score == 10 || score == 250){
-            setFear(true);
-            timeFear = 0;
+        if (score >= 50) {
+            Rect g = new Rect(90 , 170 ,  20,  20);
+            if (Collision.AABB(pacmanR, g)) {
+                main.stopGame();
+            }
         }
-
         timeFear++;
 
         if (timeFear == 300 && getFear()){
@@ -194,6 +204,40 @@ public class Game {
 
     }
 
+    private void saveGame()  {
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("bonus.dat"));
+
+            oos.writeObject(map.getBonus());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        continueGame();
+    }
+
+    public void continueGame(){
+
+        List<Rect> b = new ArrayList<>();
+
+        try{
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bonus.dat"));
+            b = (ArrayList<Rect>)ois.readObject();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     public void restart(){
 
         for (Ghost ghost : ghosts){
@@ -201,7 +245,7 @@ public class Game {
         }
         map.restart();
         pacman.restart();
-
+        score = 0;
     }
 
     public int getScale() {
