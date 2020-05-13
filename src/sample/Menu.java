@@ -34,6 +34,7 @@ public class Menu {
     private Image image;
     private Pane root;
     private Game game = null;
+    private SettingWindow sw;
 
     public static void main(String[] args) {
 
@@ -42,6 +43,8 @@ public class Menu {
 
         this.primaryStage = primaryStage;
 
+        sw = new SettingWindow();
+        sw.init(primaryStage, main);
         root = new Pane();
         box = new VBox();
         image = TextureManager.loadTexture("sprite\\orig.gif");
@@ -64,6 +67,7 @@ public class Menu {
 
 
         newGame.setOnMouseClicked(event -> { main.startGame(); });
+        setting.setOnMouseClicked(event -> { sw.startScrene(); });
 
         scene = new Scene(root, 790, 525);
 
