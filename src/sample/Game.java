@@ -56,7 +56,8 @@ public class Game {
     Vector<ObjectDraw> objectDraws;
 
     public int timeFear = 0;
-
+    public Rect[] fakePacman;
+    public Rect maxRect = new Rect(200, 200, 0, 0);
 
     public Game() {}
 
@@ -94,8 +95,6 @@ public class Game {
         redGhostDraw.init(gc, image, redGhost.getSrcR(), redGhost.getDestR());
 
         ghosts.add(redGhost);
-        //ghosts.add(pinkGhost);
-        //ghosts.add(redGhost);
 
         meals = new MealFX[4];
         meals[0] = new MealFX();
@@ -110,6 +109,12 @@ public class Game {
         meals[3] = new MealFX();
         meals[3].init(gc, image, new Rect(170.0, 222.5, 15, 15),
                 new Rect(10, 180, 10, 10), scale);
+
+        fakePacman = new Rect[4];
+        fakePacman[0] = new Rect(180, 180,0,0);
+        fakePacman[1] = new Rect(180, 180,0,0);
+        fakePacman[2] = new Rect(180, 180,0,0);
+        fakePacman[3] = new Rect(180, 180,0,0);
 
         objectDraws.add(redGhostDraw);
         objectDraws.add(pinkGhostDraw);
@@ -170,6 +175,8 @@ public class Game {
 
     public void update() {
 
+        frame++;
+
         if(KeyboardController.pauseController(scene)){
             saveGame();
         }
@@ -181,9 +188,9 @@ public class Game {
         pacman.update();
 
         Rect pacmanR = pacman.getDestR();
-
+        int numberGhost = 0;
         for (Ghost ghost : ghosts) {
-            ghost.update(map.getFancec(), pacmanR);
+            ghost.update(map.getFancec(), choiceLvl(frame, numberGhost) );
             Rect redR = ghost.getDestR();
             if ((pacmanR.x <= redR.x + 1 && pacmanR.x >= redR.x - 1) &&
                     (pacmanR.y <= redR.y + 1 && pacmanR.y >= redR.y - 1)){
@@ -196,8 +203,9 @@ public class Game {
                     break;
                 }
             }
+            numberGhost++;
         }
-        frame++;
+
 
         if (frame % 10 == 0){
             for (MealFX m : meals){
@@ -234,7 +242,7 @@ public class Game {
                 if (level == 5) {
                   ww.startScrene();
                 }
-                ww.startScrene();
+                restart();
 
             }
         }
@@ -298,6 +306,36 @@ public class Game {
         pacman.restart();
         score = 0;
         levelSize = 40 * scale;
+    }
+
+    public Rect choiceLvl(int frame, int numberGhost){
+
+        if (frame % 200 == 0)   { fakePacman[0] = maxRect.copy().random(); }
+        if (frame % 200 == 50)  { fakePacman[1] = maxRect.copy().random(); }
+        if (frame % 200 == 100) { fakePacman[2] = maxRect.copy().random(); }
+        if (frame % 200 == 150) { fakePacman[3] = maxRect.copy().random(); }
+
+
+        if (numberGhost == 0 && ((frame % 200 > 50 && lvl == Lvl.EASY)   ||
+                                (frame % 200 > 100 && lvl == Lvl.MEDIUM) ||
+                                (frame % 200 > 150 && lvl == Lvl.HARD))){
+            return fakePacman[0];
+        } else if (numberGhost == 1 && ((frame % 200 >= 50 && frame % 200 < 100 && lvl == Lvl.EASY)   ||
+                                        (frame % 200 >= 50 && frame % 200 < 150 && lvl == Lvl.MEDIUM) ||
+                                        (frame % 200 >= 50 && lvl == Lvl.HARD))) {
+            return fakePacman[1];
+        } else if (numberGhost == 2 && ((frame % 200 >= 100 && frame % 200 < 150 && lvl == Lvl.EASY)   ||
+                                        (frame % 200 >= 100 && lvl == Lvl.MEDIUM) ||
+                                        ((frame % 200 <= 50 || frame % 200 > 100) && lvl == Lvl.HARD))){
+            return fakePacman[2];
+        } else if (numberGhost == 3 && ((frame % 200 >= 150 && lvl == Lvl.EASY)   ||
+                                       ((frame % 200 >= 150 || frame % 200 < 50)&& lvl == Lvl.MEDIUM) ||
+                                       ((frame % 200 >= 150 || frame % 200 < 100) && lvl == Lvl.HARD))){
+            return fakePacman[3];
+        }
+            return pacman.getDestR();
+
+
     }
 
     public void setLvl(Lvl lvl){

@@ -23,7 +23,7 @@ public class Main extends Application {
 
         game = new Game();
         game.init(this, primaryStage, 200, 200);
-
+        game.setLevel(1);
         menu = new Menu();
         menu.init(primaryStage, this);
 
@@ -75,7 +75,7 @@ public class Main extends Application {
 
 
         game.restart();
-        game.setLevel(1);
+
         at.start();
         game.startScrene();
     }

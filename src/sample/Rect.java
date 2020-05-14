@@ -31,6 +31,16 @@ class Rect {
         return this;
     }
 
+    public Rect random(){
+
+        this.x *= Math.random();
+        this.y *= Math.random();
+        this.w *= Math.random();
+        this.h *= Math.random();
+
+        return this;
+    }
+
     public Rect(Rect r){
 
         this.x = r.x;
