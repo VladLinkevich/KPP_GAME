@@ -8,12 +8,13 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    private final int FPS = 60;
+    private final int FPS = 40;
     private final int frameDelay = 1000000000 / FPS;
     private Game game = null;
     private Menu menu;
     private AnimationTimer at;
-   
+    private DrawingProcess dp;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -26,8 +27,9 @@ public class Main extends Application {
         game.setLevel(1);
         menu = new Menu();
         menu.init(primaryStage, this);
-
-        //game.init(primaryStage, 200, 200);
+        dp = new DrawingProcess();
+        dp.init(game);
+        dp.start();
 
 
         at = new AnimationTimer(){
@@ -65,7 +67,7 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-
+        dp.stop();
         super.stop();
     }
 
@@ -80,6 +82,7 @@ public class Main extends Application {
         game.setLevel(1);
 
         game.startScrene();
+        dp.setWork(true);
         at.start();
 
     }
@@ -87,20 +90,22 @@ public class Main extends Application {
     public void stopGame(){
 
         at.stop();
+        dp.setWork(false);
         menu.startScrene();
     }
 
     public void continueGame(){
-
+        
         game.continueGame();
         game.startScrene();
+        dp.setWork(true);
         at.start();
 
     }
 
     private void update() throws IOException {
 
-            game.draw();
+            //game.draw();
             game.update();
 
     }
