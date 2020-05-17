@@ -23,5 +23,7 @@ public class ObjectDraw {
         texture.draw(this.gc);
     }
 
-
+    public void draw(){
+        texture.draw(this.gc);
+    }
 }

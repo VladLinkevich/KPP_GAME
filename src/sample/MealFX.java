@@ -28,9 +28,13 @@ public class MealFX {
         texture.destR.x += 1000;
     }
 
+    public void setCoordinate(double x){
+        this.texture.destR.x = x;
+    }
     public void restore(){
         if (texture.destR.x >= 1000)
         texture.destR.x -= 1000;
     }
+
 
 }

@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.awt.event.KeyEvent;
 import java.io.*;
-import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -47,17 +47,15 @@ public class Game {
     private Image image;
     private MealFX[] meals;
 
-    private Ghost redGhost = null;
-    private ObjectDraw redGhostDraw;
-    private Ghost pinkGhost = null;
+
+    private ObjectDraw[] objectDraws;
     private ObjectDraw pinkGhostDraw;
+    private Ghost[] ghosts;
 
-    Vector<Ghost> ghosts;
-    Vector<ObjectDraw> objectDraws;
 
-    public int timeFear = 0;
-    public Rect[] fakePacman;
-    public Rect maxRect = new Rect(200, 200, 0, 0);
+    private int timeFear = 0;
+    private Rect[] fakePacman;
+    private Rect maxRect = new Rect(200, 200, 0, 0);
 
     public Game() {}
 
@@ -69,10 +67,21 @@ public class Game {
         this.height = height;
         this.width = width;
 
+        image = TextureManager.loadTexture("sprite\\spritesheet.png");
         levelSize *= scale;
         this.lvl = Lvl.EASY;
-        ghosts = new Vector<Ghost>();
-        objectDraws = new Vector<ObjectDraw>();
+        ghosts = new Ghost[4];
+        ghosts[0] = new Ghost();
+        ghosts[0].init(new Rect(2.5,82.5,15,15), new Rect(10,10,10,10));
+        ghosts[1] = new Ghost();
+        ghosts[1].init(new Rect(2.5,102.5,15,15), new Rect(180,10,10,10));
+        ghosts[2] = new Ghost();
+        ghosts[2].init(new Rect(2.5,122.5,15,15), new Rect(180,180,10,10));
+        ghosts[3] = new Ghost();
+        ghosts[3].init(new Rect(2.5,142.5,15,15), new Rect(10,180,10,10));
+
+
+
 
         box = new VBox();
         c = new Canvas(width * scale, height * scale);
@@ -80,21 +89,22 @@ public class Game {
         gc = c.getGraphicsContext2D();
         scene = new Scene(box, width * scale, height * scale);
 
-        image = TextureManager.loadTexture("sprite\\spritesheet.png");
+        objectDraws = new ObjectDraw[4];
+
+        objectDraws[0] = new ObjectDraw();
+        objectDraws[0].init(gc, image, ghosts[0].getSrcR(), ghosts[0].getDestR());
+        objectDraws[1] = new ObjectDraw();
+        objectDraws[1].init(gc, image, ghosts[1].getSrcR(), ghosts[1].getDestR());
+        objectDraws[2] = new ObjectDraw();
+        objectDraws[2].init(gc, image, ghosts[2].getSrcR(), ghosts[2].getDestR());
+        objectDraws[3] = new ObjectDraw();
+        objectDraws[3].init(gc, image, ghosts[3].getSrcR(), ghosts[3].getDestR());
 
         pacman = new Pacman();
         pacman.init();
         pacmanDraw = new ObjectDraw();
         pacmanDraw.init(gc, image, pacman.getSrcR(), pacman.getDestR().copy().multiplication(scale));
 
-
-        redGhost = new RedGhost();
-        redGhost.init();
-
-        redGhostDraw = new ObjectDraw();
-        redGhostDraw.init(gc, image, redGhost.getSrcR(), redGhost.getDestR());
-
-        ghosts.add(redGhost);
 
         meals = new MealFX[4];
         meals[0] = new MealFX();
@@ -115,9 +125,6 @@ public class Game {
         fakePacman[1] = new Rect(180, 180,0,0);
         fakePacman[2] = new Rect(180, 180,0,0);
         fakePacman[3] = new Rect(180, 180,0,0);
-
-        objectDraws.add(redGhostDraw);
-        objectDraws.add(pinkGhostDraw);
 
         ww = new WinWindows();
         ww.init(primaryStage, this);
@@ -155,8 +162,8 @@ public class Game {
 
         pacmanDraw.draw(pacman.getDestR().copy().multiplication(scale));
 
-        for (int i = 0; i < ghosts.size(); ++i) {
-            objectDraws.get(i).draw(ghosts.get(i).getDestR().copy().multiplication(scale));
+        for (int i = 0; i < ghosts.length; ++i) {
+            objectDraws[i].draw(ghosts[i].getDestR().copy().multiplication(scale));
         }
 
         for (MealFX m : meals){
@@ -177,9 +184,7 @@ public class Game {
 
         frame++;
 
-        if(KeyboardController.pauseController(scene)){
-            saveGame();
-        }
+
         if (levelSize > 0)
         levelSize -= 5;
 
@@ -257,39 +262,84 @@ public class Game {
             setFear(false);
         }
 
+        if(KeyboardController.pauseController(scene) && frame % 10 == 0){
+            KeyboardController.pause = false;
+            saveGame();
+        }
+
     }
 
     private void saveGame()  {
 
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("bonus.dat"));
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream("save\\save.bin",false)) /*FileManager.openFile("save\\save.bin")*/){
 
-            oos.writeObject(map.getBonus());
+            for (Ghost g : ghosts){
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+                WriteToFile.writeDIR(dos, g.getDirection());
+                WriteToFile.writeRect(dos, g.getDestR());
+            }
+
+            for (MealFX m : meals){
+                dos.writeDouble(m.getDectR().x);
+            }
+
+            dos.writeInt(map.getBonus().size());
+
+            for (Rect r : map.getBonus()){
+                WriteToFile.writeRect(dos, r);
+            }
+
+            WriteToFile.writeDIR(dos, pacman.getDirection());
+            WriteToFile.writeRect(dos, pacman.getDestR());
+
+            dos.writeDouble(score);
+            dos.writeInt(level);
+            WriteToFile.writeDiff(dos, lvl);
+
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
         }
 
-        continueGame();
+
+        main.stopGame();
     }
 
     public void continueGame(){
 
-        List<Rect> b = new ArrayList<>();
+        try(DataInputStream dis = new DataInputStream(new FileInputStream("save\\save.bin")))
+        {
+            for (Ghost g : ghosts){
+                g.setDirection(ReadFile.readDIR(dis));
+                g.setCordinate(dis.readDouble(), dis.readDouble());
+            }
 
-        try{
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bonus.dat"));
-            b = (ArrayList<Rect>)ois.readObject();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            for (MealFX m : meals){
+                m.setCoordinate(dis.readDouble());
+            }
+
+            int lenght = dis.readInt();
+
+            for (int i = 0, end = map.getBonus().size(); i < end; i++){
+                if (i < lenght){
+                    map.getBonus().get(i).x = dis.readDouble();
+                    map.getBonus().get(i).y = dis.readDouble();
+                }
+            }
+
+
+            pacman.setDirection(ReadFile.readDIR(dis));
+            KeyboardController.dir = pacman.getDirection();
+            pacman.setCoordinate(dis.readDouble(), dis.readDouble());
+
+            score = dis.readDouble();
+            level = dis.readInt();
+            this.lvl = ReadFile.readDiff(dis);
         }
-
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
 
     }
 
@@ -301,9 +351,11 @@ public class Game {
         for (MealFX m : meals){
             m.restore();
         }
-        pacman.setNewDirection(DIR.STOP);
+
         map.restart();
         pacman.restart();
+        KeyboardController.dir = DIR.STOP;
+        pacman.setDirection(DIR.STOP);
         score = 0;
         levelSize = 40 * scale;
     }
@@ -320,17 +372,17 @@ public class Game {
                                 (frame % 200 > 100 && lvl == Lvl.MEDIUM) ||
                                 (frame % 200 > 150 && lvl == Lvl.HARD))){
             return fakePacman[0];
-        } else if (numberGhost == 1 && ((frame % 200 >= 50 && frame % 200 < 100 && lvl == Lvl.EASY)   ||
-                                        (frame % 200 >= 50 && frame % 200 < 150 && lvl == Lvl.MEDIUM) ||
-                                        (frame % 200 >= 50 && lvl == Lvl.HARD))) {
+        } else if (numberGhost == 1 && (((frame % 200 <= 50 || frame % 200 > 100) && lvl == Lvl.EASY)   ||
+                                        ((frame % 200 <= 50 && frame % 200 > 150) && lvl == Lvl.MEDIUM) ||
+                                        (frame % 200 < 50 && lvl == Lvl.HARD))) {
             return fakePacman[1];
-        } else if (numberGhost == 2 && ((frame % 200 >= 100 && frame % 200 < 150 && lvl == Lvl.EASY)   ||
-                                        (frame % 200 >= 100 && lvl == Lvl.MEDIUM) ||
-                                        ((frame % 200 <= 50 || frame % 200 > 100) && lvl == Lvl.HARD))){
+        } else if (numberGhost == 2 && (((frame % 200 <= 100 || frame % 200 > 150) && lvl == Lvl.EASY)   ||
+                                        (frame % 200 <= 100 && lvl == Lvl.MEDIUM) ||
+                                        ((frame % 200 >= 50 && frame % 200 < 100) && lvl == Lvl.HARD))){
             return fakePacman[2];
-        } else if (numberGhost == 3 && ((frame % 200 >= 150 && lvl == Lvl.EASY)   ||
-                                       ((frame % 200 >= 150 || frame % 200 < 50)&& lvl == Lvl.MEDIUM) ||
-                                       ((frame % 200 >= 150 || frame % 200 < 100) && lvl == Lvl.HARD))){
+        } else if (numberGhost == 3 && ((frame % 200 <= 150 && lvl == Lvl.EASY)   ||
+                                       ((frame % 200 >= 50 && frame % 200 < 150)&& lvl == Lvl.MEDIUM) ||
+                                       ((frame % 200 >= 100 && frame % 200 < 150) && lvl == Lvl.HARD))){
             return fakePacman[3];
         }
             return pacman.getDestR();

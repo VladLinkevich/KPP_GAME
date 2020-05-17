@@ -92,7 +92,11 @@ public class Pacman /*implements Person*/ {
         return direction;
     }
 
+    public void setCoordinate(double x, double y) {
+        this.destR.x = x;
+        this.destR.y = y;
 
+    }
 
     public Rect getSrcR() {
         return this.srcR;

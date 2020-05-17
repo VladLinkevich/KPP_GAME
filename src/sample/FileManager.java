@@ -4,24 +4,17 @@ import java.io.*;
 
 public class FileManager {
 
-    public static BufferedReader readFile(String path) {
-        try {
-            return new BufferedReader(new FileReader(path));
-        } catch (FileNotFoundException e) {
-            System.out.println("Error FileReader in FileManager");
+    public static DataOutputStream openFile(String path){
+        try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(path)))
+        {
+            return dos;
+        }
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
         }
         return  null;
     }
 
-    public static PrintWriter fileWriter(){
-        try {
-            File file = new File("sprite\\save.txt");
-            if(file.exists())
-                file.createNewFile();
-            return new PrintWriter(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }

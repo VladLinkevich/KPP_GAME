@@ -32,8 +32,10 @@ public class KeyboardController {
 
     public static boolean pauseController(Scene scene){
 
+
         scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
             if (key.getCode() == KeyCode.ESCAPE) pause = true;
+
         });
 
         return pause;

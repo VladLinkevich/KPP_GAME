@@ -13,7 +13,7 @@ public class Main extends Application {
     private Game game = null;
     private Menu menu;
     private AnimationTimer at;
-    proc p;
+   
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -36,11 +36,13 @@ public class Main extends Application {
             public void handle(long now) {
                 if (lastTick == 0) {
                     lastTick = now;
+
                     try {
                         update();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
 
                 }
 
@@ -75,9 +77,11 @@ public class Main extends Application {
 
 
         game.restart();
+        game.setLevel(1);
 
-        at.start();
         game.startScrene();
+        at.start();
+
     }
 
     public void stopGame(){
@@ -86,6 +90,13 @@ public class Main extends Application {
         menu.startScrene();
     }
 
+    public void continueGame(){
+
+        game.continueGame();
+        game.startScrene();
+        at.start();
+
+    }
 
     private void update() throws IOException {
 

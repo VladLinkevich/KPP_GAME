@@ -71,6 +71,7 @@ public class Menu {
 
 
         newGame.setOnMouseClicked(event -> { main.startGame(); });
+        continueGame.setOnMouseClicked(event -> { main.continueGame(); });
         setting.setOnMouseClicked(event -> { sw.startScrene(); });
 
         scene = new Scene(root, 790, 525);
