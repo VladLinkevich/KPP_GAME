@@ -102,7 +102,8 @@ public class Pacman /*implements Person*/ {
         return this.srcR;
     }
 
-    public void setDirection(DIR direction) {
+    public DIR setDirection(DIR direction) {
         this.direction = direction;
+        return this.direction;
     }
 }

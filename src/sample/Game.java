@@ -32,6 +32,8 @@ public class Game {
     private Main main;
     private int frame = 0;
     private boolean save = false;
+    private int time = 0;
+    private int skipByte = 0;
 
     private VBox box;
     private Canvas c;
@@ -53,9 +55,14 @@ public class Game {
     private Ghost[] ghosts;
 
 
+
+
+    private boolean writeReplay;
+    private boolean playReplay = true;
     private int timeFear = 0;
     private Rect[] fakePacman;
     private Rect maxRect = new Rect(200, 200, 0, 0);
+
 
     public Game() {}
 
@@ -190,6 +197,8 @@ public class Game {
 
 
         pacman.setNewDirection(KeyboardController.pacmanController(scene));
+
+
         pacman.update();
 
         Rect pacmanR = pacman.getDestR();
@@ -264,14 +273,29 @@ public class Game {
 
         if(KeyboardController.pauseController(scene) && frame % 10 == 0){
             KeyboardController.pause = false;
-            saveGame();
+            saveGame("save\\save.bin");
+        }
+
+        if(KeyboardController.replayController(scene) && frame % 10 == 0){
+            writeReplay = true;
+            saveReplay("save\\saveReplay.bin");
+        }
+
+        if(playReplay && (frame % 10 == 0 || frame == 1) ){
+
+            if (frame == 1){
+                skipByte = 0;
+                continueGame("save\\saveReplay.bin");
+            } else {
+                playReplay("save\\saveReplay.bin");
+            }
         }
 
     }
 
-    private void saveGame()  {
+    private void saveGame(String path)  {
 
-        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream("save\\save.bin",false)) /*FileManager.openFile("save\\save.bin")*/){
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(path,false)) /*FileManager.openFile("save\\save.bin")*/){
 
             for (Ghost g : ghosts){
 
@@ -296,34 +320,41 @@ public class Game {
             dos.writeInt(level);
             WriteToFile.writeDiff(dos, lvl);
 
+
         }
         catch (IOException e){
             System.out.println(e.getMessage());
+            System.out.println("saveReplay");
         }
 
-
+        if (!writeReplay)
         main.stopGame();
     }
 
-    public void continueGame(){
+    public void continueGame(String path){
 
-        try(DataInputStream dis = new DataInputStream(new FileInputStream("save\\save.bin")))
+        try(DataInputStream dis = new DataInputStream(new FileInputStream(path)))
         {
             for (Ghost g : ghosts){
                 g.setDirection(ReadFile.readDIR(dis));
                 g.setCordinate(dis.readDouble(), dis.readDouble());
             }
 
+
             for (MealFX m : meals){
                 m.setCoordinate(dis.readDouble());
             }
 
+
             int lenght = dis.readInt();
+
+
 
             for (int i = 0, end = map.getBonus().size(); i < end; i++){
                 if (i < lenght){
                     map.getBonus().get(i).x = dis.readDouble();
                     map.getBonus().get(i).y = dis.readDouble();
+                    skipByte += 16;
                 }
             }
 
@@ -332,9 +363,12 @@ public class Game {
             KeyboardController.dir = pacman.getDirection();
             pacman.setCoordinate(dis.readDouble(), dis.readDouble());
 
+
             score = dis.readDouble();
             level = dis.readInt();
             this.lvl = ReadFile.readDiff(dis);
+            skipByte += 152;
+
         }
         catch (IOException ex)
         {
@@ -359,6 +393,50 @@ public class Game {
         score = 0;
         levelSize = 40 * scale;
     }
+
+    private void saveReplay(String path){
+
+        if (time == 0){
+            saveGame("save\\saveReplay.bin");
+        } else {
+            try (DataOutputStream dos = new DataOutputStream(new FileOutputStream("save\\saveReplay.bin",true)) /*FileManager.openFile("save\\save.bin")*/){
+
+                for (Ghost g : ghosts){
+                    WriteToFile.writeDIR(dos, g.getDirection());
+                }
+
+                WriteToFile.writeDIR(dos, pacman.getDirection());
+
+            }catch (IOException e){
+                System.out.println(e.getMessage());
+            }
+        }
+
+        time++;
+    }
+
+    private void playReplay(String path){
+
+        try(DataInputStream dis = new DataInputStream(new FileInputStream(path)))
+        {
+            dis.skipBytes(skipByte);
+
+            for (Ghost g : ghosts){
+               g.setDirection(ReadFile.readDIR(dis));
+            }
+
+            pacman.setDirection(ReadFile.readDIR(dis));
+            KeyboardController.dir = pacman.getDirection();
+            skipByte += 20;
+
+
+        }
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 
     public Rect choiceLvl(int frame, int numberGhost){
 

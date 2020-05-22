@@ -1,12 +1,7 @@
 
-
-- number of ghost 
-
+ 
 	- direction ghost
 	- destR ghost
-
-
-- number of meal
 
 	- destR.x meal
 

@@ -95,8 +95,8 @@ public class Main extends Application {
     }
 
     public void continueGame(){
-        
-        game.continueGame();
+
+        game.continueGame("save\\save.bin");
         game.startScrene();
         dp.setWork(true);
         at.start();

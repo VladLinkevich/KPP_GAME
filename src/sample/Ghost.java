@@ -40,30 +40,31 @@ public class Ghost {
                 pictures++;
             }
             srcR.y = startSrc.y;
+            if (false) {
+    if ((direction == DIR.UP || direction == DIR.DOWN) && frame % 10 == 0 && !stop) {
+        if (!Collision.collisionWithFancec(fancec, destR.copy(), DIR.RIGHT) ||
+                !Collision.collisionWithFancec(fancec, destR.copy(), DIR.LEFT)) {
 
-            if ((direction == DIR.UP || direction == DIR.DOWN) && frame % 10 == 0 && !stop){
-                if(!Collision.collisionWithFancec(fancec, destR.copy(), DIR.RIGHT) ||
-                        !Collision.collisionWithFancec(fancec, destR.copy(), DIR.LEFT)){
+            stop = true;
+        }
+    }
 
-                    stop = true;
-                }
-            }
+    if ((direction == DIR.LEFT || direction == DIR.RIGHT) && frame % 10 == 0 && !stop) {
+        if (!Collision.collisionWithFancec(fancec, destR.copy(), DIR.UP) ||
+                !Collision.collisionWithFancec(fancec, destR.copy(), DIR.DOWN)) {
 
-            if ((direction == DIR.LEFT || direction == DIR.RIGHT) && frame % 10 == 0 && !stop){
-                if(!Collision.collisionWithFancec(fancec, destR.copy(), DIR.UP) ||
-                        !Collision.collisionWithFancec(fancec, destR.copy(), DIR.DOWN)){
-
-                    stop = true;
-                }
-            }
+            stop = true;
+        }
+    }
 
 
-            if (stop && (frame % 10 == 0)){
-                if(!Animation.getFear()) direction = GhostBehavior.ghostDirectionInOvertake(fancec, this.destR, destPacman, direction);
-                else direction = GhostBehavior.ghostDirectionInFear(fancec, this.destR, destPacman, direction);
-                // stop = false;
-            }
-
+    if (stop && (frame % 10 == 0)) {
+        if (!Animation.getFear())
+            direction = GhostBehavior.ghostDirectionInOvertake(fancec, this.destR, destPacman, direction);
+        else direction = GhostBehavior.ghostDirectionInFear(fancec, this.destR, destPacman, direction);
+        // stop = false;
+    }
+}
 
 
             switch (direction) {

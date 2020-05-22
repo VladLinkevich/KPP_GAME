@@ -8,7 +8,6 @@ public class DrawingProcess extends Thread {
     private boolean isWork;
 
     public void init(Game game){
-        this.isWork = false;
         this.game = game;
     }
 

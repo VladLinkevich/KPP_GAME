@@ -10,6 +10,7 @@ public class KeyboardController {
 
     static DIR dir = DIR.STOP;
     static boolean pause = false;
+    static boolean replay = false;
 
     public static DIR pacmanController(Scene scene){
 
@@ -39,5 +40,15 @@ public class KeyboardController {
         });
 
         return pause;
+    }
+
+    public static boolean replayController(Scene scene){
+
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
+            if (key.getCode() == KeyCode.Q) replay = true;
+            if (key.getCode() == KeyCode.E) replay = false;
+        });
+
+        return replay;
     }
 }
