@@ -93,14 +93,14 @@ public class Ghost {
 
 
         public void restart() {
-           
+
             direction = DIR.STOP;
             this.destR = new Rect(startDest);
 
         }
 
-    public void isReplay(){
-        this.replay = true;
+    public void setReplay(boolean replay){
+        this.replay = replay;
     }
     public void setDirection(DIR direction) {
         this.direction = direction;

@@ -31,7 +31,7 @@ public class Game {
     private double score = 0;
     private Main main;
     private int frame = 0;
-    //private boolean save = false;
+
     private int time = 0;
     private int skipByte = 0;
 
@@ -47,6 +47,7 @@ public class Game {
     private Map map;
     private MapFX mapFX;
     private Image image;
+    private Image replayIcon;
     private MealFX[] meals;
 
 
@@ -58,7 +59,7 @@ public class Game {
 
 
     private boolean writeReplay;
-    private boolean playReplay = true;
+    private boolean playReplay;
     private int timeFear = 0;
     private Rect[] fakePacman;
     private Rect maxRect = new Rect(200, 200, 0, 0);
@@ -75,6 +76,7 @@ public class Game {
         this.width = width;
 
         image = TextureManager.loadTexture("sprite\\spritesheet.png");
+        replayIcon = TextureManager.loadTexture("sprite\\replay.png");
         levelSize *= scale;
         this.lvl = Lvl.EASY;
         ghosts = new Ghost[4];
@@ -178,6 +180,14 @@ public class Game {
         }
 
 
+        if (playReplay){
+            TextureManager.drawTexture(gc, replayIcon,
+                    new Rect(0,0,440, 1540),
+                    new Rect(650,0,50,140));
+        }
+
+
+
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("", levelSize));
         gc.fillText("Level " + level, (100 * scale) - levelSize * 1.35, (100 * scale) - levelSize);
@@ -185,6 +195,12 @@ public class Game {
         gc.setFill(Color.BLACK);
         gc.setFont(new Font("", 30));
         gc.fillText("Score: " + (int)score, 10, 30);
+
+        gc.setFill(Color.BLACK);
+        gc.setFont(new Font("", 35));
+        gc.fillText("ESC",10, 198 * scale);
+
+
     }
 
     public void update() {
@@ -209,7 +225,7 @@ public class Game {
             if ((pacmanR.x <= redR.x + 1 && pacmanR.x >= redR.x - 1) &&
                     (pacmanR.y <= redR.y + 1 && pacmanR.y >= redR.y - 1)){
                 if (getFear()){ redR.x = 100; redR.y = 80; }
-                else { main.stopGame(); }
+                else { stopGame(); }
             }
             for (Rect r : map.getFancec()) {
                 if (Collision.AABB(redR, r)) {
@@ -273,7 +289,11 @@ public class Game {
 
         if(KeyboardController.pauseController(scene) && frame % 10 == 0){
             KeyboardController.pause = false;
-            saveGame("save\\save.bin");
+            if (!playReplay) {
+                saveGame("save\\save.bin");
+            }
+            if (!writeReplay)
+                stopGame();
         }
 
         if(KeyboardController.replayController(scene) && frame % 10 == 0){
@@ -283,13 +303,14 @@ public class Game {
 
         if(playReplay && (frame % 10 == 0 || frame == 1) ){
 
+
             if (frame == 1){
 
                 skipByte = 0;
                 continueGame("save\\saveReplay.bin");
             } else {
                 for (Ghost g : ghosts){
-                    g.isReplay();
+                    g.setReplay(true);
                 }
                 playReplay("save\\saveReplay.bin");
             }
@@ -331,8 +352,7 @@ public class Game {
             System.out.println("saveReplay");
         }
 
-        if (!writeReplay)
-        main.stopGame();
+
     }
 
     public void continueGame(String path){
@@ -472,6 +492,20 @@ public class Game {
 
     }
 
+    public void stopGame(){
+        restart();
+        frame = 0;
+        playReplay = false;
+        for (Ghost g : ghosts){
+            g.setReplay(false);
+        }
+        main.stopGame();
+    }
+
+    public void setPlayReplay(boolean playReplay) {
+        this.playReplay = playReplay;
+    }
+
     public void setLvl(Lvl lvl){
         this.lvl = lvl;
     }
@@ -481,7 +515,7 @@ public class Game {
     }
 
     public void newGame(){
-        main.stopGame();
+        stopGame();
     }
 
     public int getScale() {

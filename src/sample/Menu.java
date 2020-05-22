@@ -68,12 +68,13 @@ public class Menu {
         box.setTranslateX(195);
         box.setTranslateY(50);
 
-        box.getChildren().addAll(newGame, continueGame, setting);
+        box.getChildren().addAll(newGame, continueGame, setting, replay);
 
 
         newGame.setOnMouseClicked(event -> { main.startGame(); });
         continueGame.setOnMouseClicked(event -> { main.continueGame(); });
         setting.setOnMouseClicked(event -> { sw.startScrene(); });
+        replay.setOnMouseClicked(event -> { main.startReplay(); });
 
         scene = new Scene(root, 790, 525);
 

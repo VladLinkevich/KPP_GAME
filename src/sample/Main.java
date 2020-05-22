@@ -65,6 +65,19 @@ public class Main extends Application {
 
     }
 
+
+    public void startReplay(){
+
+        game.restart();
+        game.setLevel(1);
+
+        game.setPlayReplay(true);
+
+        game.startScrene();
+        dp.setWork(true);
+        at.start();
+    }
+
     @Override
     public void stop() throws Exception {
         dp.stop();
