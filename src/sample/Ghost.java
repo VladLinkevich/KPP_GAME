@@ -17,7 +17,7 @@ public class Ghost {
 
         private int pictures = 0;
         private int speedChangePictures = 5;
-
+        private boolean replay;
 
         private DIR direction = DIR.RIGHT;
 
@@ -40,7 +40,7 @@ public class Ghost {
                 pictures++;
             }
             srcR.y = startSrc.y;
-            if (false) {
+            if (!replay) {
     if ((direction == DIR.UP || direction == DIR.DOWN) && frame % 10 == 0 && !stop) {
         if (!Collision.collisionWithFancec(fancec, destR.copy(), DIR.RIGHT) ||
                 !Collision.collisionWithFancec(fancec, destR.copy(), DIR.LEFT)) {
@@ -93,11 +93,15 @@ public class Ghost {
 
 
         public void restart() {
+           
             direction = DIR.STOP;
             this.destR = new Rect(startDest);
 
         }
 
+    public void isReplay(){
+        this.replay = true;
+    }
     public void setDirection(DIR direction) {
         this.direction = direction;
     }

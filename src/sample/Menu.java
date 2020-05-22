@@ -63,6 +63,7 @@ public class Menu {
         StackPane newGame = addButton("New Game");
         StackPane continueGame =  addButton("Continue");
         StackPane setting =  addButton("Settings");
+        StackPane replay =  addButton("Replay");
 
         box.setTranslateX(195);
         box.setTranslateY(50);

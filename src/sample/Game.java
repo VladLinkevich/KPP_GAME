@@ -31,7 +31,7 @@ public class Game {
     private double score = 0;
     private Main main;
     private int frame = 0;
-    private boolean save = false;
+    //private boolean save = false;
     private int time = 0;
     private int skipByte = 0;
 
@@ -284,9 +284,13 @@ public class Game {
         if(playReplay && (frame % 10 == 0 || frame == 1) ){
 
             if (frame == 1){
+
                 skipByte = 0;
                 continueGame("save\\saveReplay.bin");
             } else {
+                for (Ghost g : ghosts){
+                    g.isReplay();
+                }
                 playReplay("save\\saveReplay.bin");
             }
         }
